@@ -1,0 +1,16 @@
+@function fluid($min, $max, $minWidth, $maxWidth)
+   $minRem: pixelToRem($min)
+   $maxRem: pixelToRem($max)
+
+   $min: stripUnits($min)
+   $max: stripUnits($max)
+   $minWidth: stripUnits($minWidth)
+   $maxWidth: stripUnits($maxWidth)
+
+   $widthRelativeSize: (100 * ($max - $min)) / ($maxWidth - $minWidth)
+   $relativeSizePX: (($minWidth * $max) - ($maxWidth * $min)) / ($minWidth - $maxWidth)
+
+   $rsREM: pixelToRem($relativeSizePX)
+   $widthVW: $widthRelativeSize + vw
+
+   @return clamp(#{$minRem}, #{$widthVW} + #{$rsREM}, #{$maxRem})

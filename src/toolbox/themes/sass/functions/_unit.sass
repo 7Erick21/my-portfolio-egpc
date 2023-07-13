@@ -1,0 +1,10 @@
+@use 'sass:math'
+
+@function stripUnits($number)
+   @if type-of($number) == 'number' and not unitless($number)
+      @return $number / ($number * 0 + 1)
+
+   @return $number
+
+@function pixelToRem($pixels, $baseFontSize: 16px)
+   @return stripUnits($pixels / $baseFontSize) + rem
