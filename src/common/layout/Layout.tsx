@@ -4,7 +4,7 @@ import {
   Box, useColorScheme
 } from '@mui/material'
 import React, {
-  FC, useCallback, useEffect
+  FC, useCallback, useEffect, useRef
 } from 'react'
 import Particles from 'react-tsparticles'
 import { loadFull } from 'tsparticles'
@@ -20,6 +20,7 @@ import { IContextProviders } from '@/toolbox/interface/Context'
 
 import { Nav } from '../components/Nav'
 import styles from './Layout.module.sass'
+import { motion } from 'framer-motion';
 
 type ILayoutProps = IContextProviders
 
@@ -34,6 +35,8 @@ export const Layout:FC<ILayoutProps> = ({ children }) => {
     key: ELocalStorage.ETheme,
     initalValue: ETheme.SYSTEM
   })
+
+  const navDragRef = useRef<HTMLElement>(null)
 
   const backgroundParticles = mode === ETheme.DARK ? '#282C34' : '#AFAFAF'
   const linesParticles = mode === ETheme.DARK ? '#36A2EB' : '#C19A6B'
@@ -74,10 +77,10 @@ export const Layout:FC<ILayoutProps> = ({ children }) => {
           lines:linesParticles
         })}
       />
-      <Box component='main' className={styles.Main}>
+      <motion.article className={styles.Main} ref={navDragRef}>
         {children}
-        <Nav />
-      </Box>
+        <Nav refDragContaint={navDragRef} />
+      </motion.article>
     </Box>
   )
 }

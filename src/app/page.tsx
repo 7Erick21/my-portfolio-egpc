@@ -4,16 +4,10 @@ import { useColorScheme } from '@mui/material'
 
 import { ETheme } from '@/toolbox/enums/Theme'
 
-
-
-
-
 export default function Home () {
   const {
     mode, setMode
   } = useColorScheme()
-
-  console.log(mode)
 
   return (
     <div>

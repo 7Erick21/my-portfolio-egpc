@@ -1,31 +1,37 @@
-import { Home } from '@mui/icons-material'
+import { Home, Person, FolderCopy, Business, Chat, ContactMail } from '@mui/icons-material'
 
 import { INavDefaults } from './Nav.interface'
+import { RAbout, RContact, RExperience, RHome, RProyects, RRecommendations } from '@/toolbox/constants/Routes'
 
 export const NavDefaults: INavDefaults[] = [
   {
     IconNav: Home,
-    url: 'f',
+    url: RHome,
     nav:''
   },
   {
-    IconNav: Home,
-    url: 'f',
+    IconNav: Person,
+    url: RAbout,
     nav:''
   },
   {
-    IconNav: Home,
-    url: 'f',
+    IconNav: FolderCopy,
+    url: RProyects,
     nav:''
   },
   {
-    IconNav: Home,
-    url: 'f',
+    IconNav: Business,
+    url: RExperience,
     nav:''
   },
   {
-    IconNav: Home,
-    url: 'f',
+    IconNav: Chat,
+    url: RRecommendations,
+    nav:''
+  },
+  {
+    IconNav: ContactMail,
+    url: RContact,
     nav:''
   },
 ]
