@@ -6,9 +6,9 @@ import { MainTypography } from '../typography'
 
 export const ThemeMui: CssVarsThemeOptions = {
   colorSchemes:{
-    dark:{ palette:DarkPalette, },
-    light:{ palette: LightPalette }
+    dark:{ palette: DarkPalette, },
+    light:{ palette: LightPalette },
   },
-  typography:MainTypography
+  typography:MainTypography,
 }
 

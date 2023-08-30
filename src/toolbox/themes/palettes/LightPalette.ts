@@ -4,8 +4,8 @@ export const LightPalette: PaletteOptions = {
   background: { default: '#AFAFAF' },
   primary: {
     main: '#FEA31E',
-    contrastText: '#FFFFFF',
-    '50': '#FFF3EB',
+    contrastText: '#999999',
+    '50': '#999999',
   },
   success: { main: '#8BC828', },
   error: { main: '#E37777', },

@@ -3,8 +3,9 @@
 import {
   Box, useColorScheme
 } from '@mui/material'
+import { motion } from 'framer-motion'
 import React, {
-  FC, useCallback, useEffect, useRef
+  FC, useCallback, useEffect
 } from 'react'
 import Particles from 'react-tsparticles'
 import { loadFull } from 'tsparticles'
@@ -13,34 +14,17 @@ import type {
 } from 'tsparticles-engine'
 
 import { handleThemeParticles } from '@/toolbox/constants/Particles'
-import { ELocalStorage } from '@/toolbox/enums/LocalStorage'
 import { ETheme } from '@/toolbox/enums/Theme'
-import { useLocalStorage } from '@/toolbox/hooks/LocalStorage'
 import { IContextProviders } from '@/toolbox/interface/Context'
 
 import { Nav } from '../components/Nav'
 import styles from './Layout.module.sass'
-import { motion } from 'framer-motion';
 
 type ILayoutProps = IContextProviders
 
 export const Layout:FC<ILayoutProps> = ({ children }) => {
-  const {
-    mode, setMode
-  } = useColorScheme()
+  const { mode } = useColorScheme()
 
-  const {
-    valueLocalStorage, setValueLocalStorage
-  } = useLocalStorage<ETheme>({
-    key: ELocalStorage.ETheme,
-    initalValue: ETheme.SYSTEM
-  })
-
-  const navDragRef = useRef<HTMLElement>(null)
-
-  const backgroundParticles = mode === ETheme.DARK ? '#282C34' : '#AFAFAF'
-  const linesParticles = mode === ETheme.DARK ? '#36A2EB' : '#C19A6B'
-  const colorParticles = mode === ETheme.DARK ? '#61C0BF' : '#A65343'
 
   const particlesInit = useCallback(async (engine: Engine) => {
     await loadFull(engine)
@@ -51,19 +35,28 @@ export const Layout:FC<ILayoutProps> = ({ children }) => {
     async (container: Container | undefined) => { },
     []
   )
+ 
+  useEffect(()=>{console.log(mode)}, [mode])
 
-  useEffect(()=>{
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+  // const [mounted, setMounted] = useState<boolean>(false)
+  
+  // useEffect(() => {
+  //   setMounted(true)
+  // }, [])
 
-    if(valueLocalStorage === ETheme.SYSTEM) {
-      if(mediaQuery.matches) {setMode(ETheme.DARK)}
-      else {setMode(ETheme.LIGHT)}
-    }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // if (!mounted) {
+  //   // for server-side rendering
+  //   // learn more at https://github.com/pacocoursey/next-themes#avoid-hydration-mismatch
+  //   return null
+  // }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(()=>{setValueLocalStorage(mode as ETheme)}, [mode])
+  // const backgroundParticles = mode === ETheme.DARK ? '#282C34' : '#AFAFAF'
+  // const linesParticles = mode === ETheme.DARK ? '#36A2EB' : '#C19A6B'
+  // const colorParticles = mode === ETheme.DARK ? '#61C0BF' : '#A65343'
+
+
+
+  
 
   return (
     <Box className={styles.Content}>
@@ -72,14 +65,14 @@ export const Layout:FC<ILayoutProps> = ({ children }) => {
         init={particlesInit}
         loaded={particlesLoaded}
         options={handleThemeParticles({
-          background:backgroundParticles,
-          particles:colorParticles,
-          lines:linesParticles
+          background:mode === ETheme.DARK ? '#282C34' : '#AFAFAF',
+          particles:mode === ETheme.DARK ? '#61C0BF' : '#A65343',
+          lines:mode === ETheme.DARK ? '#36A2EB' : '#C19A6B'
         })}
       />
-      <motion.article className={styles.Main} ref={navDragRef}>
+      <motion.article className={styles.Main} >
         {children}
-        <Nav refDragContaint={navDragRef} />
+        <Nav />
       </motion.article>
     </Box>
   )

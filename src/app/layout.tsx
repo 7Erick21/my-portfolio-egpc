@@ -2,13 +2,12 @@
 
 import '@/toolbox/themes/sass/_index.sass'
 
-import { getInitColorSchemeScript } from '@mui/material'
+// import { getInitColorSchemeScript } from '@mui/material'
 import { Montserrat_Alternates } from 'next/font/google'
-import { ReactNode, } from 'react'
 
 import { Layout } from '@/common/layout/Layout'
 import { ThemeMuiContextProvider } from '@/context/ThemeMuiContext'
-import { ETheme } from '@/toolbox/enums/Theme'
+import { IContextProviders } from '@/toolbox/interface/Context'
 
 export const metadata = {
   title: 'Create Next App',
@@ -21,12 +20,19 @@ const font = Montserrat_Alternates({
   weight: ['400', '600', '700'],
 })
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+type IRootLayoutProps = IContextProviders
+
+
+export default function RootLayout({ children }: IRootLayoutProps) {
+
+
+
+  
 
   return (
     <html lang='es'>
       <body className={font.className}>
-        {getInitColorSchemeScript({ defaultMode:ETheme.SYSTEM })}
+        {/* {getInitColorSchemeScript()} */}
         <ThemeMuiContextProvider>
           <Layout>
             {children}
@@ -37,3 +43,5 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     </html>
   )
 }
+
+

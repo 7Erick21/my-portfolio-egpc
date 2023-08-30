@@ -1,29 +1,62 @@
 'use client'
 
 import {
-  CssBaseline,
-  Experimental_CssVarsProvider as CssVarsProvider,
-  experimental_extendTheme as extendTheme,
-  StyledEngineProvider,
+  Button, Experimental_CssVarsProvider as CssVarsProvider, experimental_extendTheme as extendTheme, useColorScheme,
 } from '@mui/material'
-import { FC } from 'react'
+import {
+  FC, useEffect, useState
+} from 'react'
 
-import { ETheme } from '@/toolbox/enums/Theme'
 import { IContextProviders } from '@/toolbox/interface/Context'
 import { THEMES } from '@/toolbox/themes/Themes'
 
 
 type IThemeMuiProviderProps = IContextProviders
 
-export const ThemeMuiContextProvider: FC<IThemeMuiProviderProps> = ({ children }) => {
-  const themeMui = extendTheme(THEMES)
+const ModeSwitcher = () => {
+  const {
+    mode, setMode
+  } = useColorScheme()
+  const [mounted, setMounted] = useState<boolean>(false)
+
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  if (!mounted) {
+    // for server-side rendering
+    // learn more at https://github.com/pacocoursey/next-themes#avoid-hydration-mismatch
+    return null
+  }
 
   return (
-    <CssVarsProvider theme={themeMui} defaultMode={ETheme.SYSTEM}>
-      <CssBaseline/>
-      <StyledEngineProvider injectFirst>
-        {children}
-      </StyledEngineProvider>
+    <Button
+      variant='outlined'
+      onClick={() => {
+        if (mode === 'light') {
+          setMode('dark')
+        } else {
+          setMode('light')
+        }
+      }}
+    >
+      {mode === 'light' ? 'Light' : 'Dark'}
+    </Button>
+  )
+}
+
+export const ThemeMuiContextProvider: FC<IThemeMuiProviderProps> = ({ children }) => {
+  
+  const themeMui = extendTheme(THEMES)
+
+
+  return (
+    <CssVarsProvider theme={themeMui}>
+      {/* <CssBaseline/> */}
+      {/* <StyledEngineProvider injectFirst> */}
+      <ModeSwitcher />
+      {children}
+      {/* </StyledEngineProvider> */}
     </CssVarsProvider>
   )
 }

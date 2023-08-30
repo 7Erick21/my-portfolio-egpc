@@ -1,3 +1,5 @@
 export enum ELocalStorage {
-    ETheme = 'ETheme'
+    THEME = 'theme',
+    MODE = 'mode'
 }
+
